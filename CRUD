@@ -1,0 +1,72 @@
+Create database Student;
+
+CREATE TABLE Registration (
+ID int (5), 
+Name varchar(50), 
+Email varchar(50), 
+Date_of_Birth Date, City varchar(50), 
+City varchar(30),
+MobileNumber varchar(10) UNIQUE,
+PRIMARY KEY (ID));
+
+import java.sql.*;
+public class Hello{
+public static void main(String[] args) {
+Connection con=null;
+Statement st=null;
+try {
+//Step 2: Open the Connection
+con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Student", "root",
+"Suraj143@#");
+
+con.setAutoCommit(false);
+
+/// create ,Insert update and delete operation
+
+
+String insert1 = "INSERT INTO Registration Values (1, 'Alice Johnson', 'alice.johnson@example.com', '1990-05-15', 'New York', '1234567890')";
+
+String insert2 = "INSERT INTO Registration Values (2, 'Bob Smith', 'bob.smith@example.com', '1985-10-25', 'Los Angeles', '2345678901'')";
+
+String insert3 = "INSERT INTO Registration Values (3, 'Charlie Brown', 'charlie.brown@example.com', '2000-03-12', 'Chicago', '3456789012')";
+
+String insert4 = "UPDATE Registraion set City = 'Mexico' where ID = 1";
+
+String insert5 = "DELETE FROM Registraion WHERE ID  = 2;
+
+
+
+
+      //Adding the statements to batch
+
+       st.addBatch(insert1);
+       st.addBatch(insert2);
+       st.addBatch(insert3);
+       st.addBatch(insert4);
+       st.addBatch(insert5);
+
+
+      //Executing the batch
+      st.executeBatch();
+
+      //Saving the changes
+      con.commit();
+
+
+}catch(Exception ex) {
+ex.printStackTrace();
+}
+finally {
+//Step 7: Close the Resources.
+try {
+if(st!=null)
+st.close();
+if(con!=null)
+con.close();
+}catch(Exception e) {
+e.printStackTrace();
+}
+}
+}
+}
+
